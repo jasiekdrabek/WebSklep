@@ -21,7 +21,7 @@ namespace WebSklep.Tables
         // on configuring and using a Code First model, see http://go.microsoft.com/fwlink/?LinkId=390109.
 
         // public virtual DbSet<MyEntity> MyEntities { get; set; }
-    }
+    
 
     //public class MyEntity
     //{
@@ -29,8 +29,9 @@ namespace WebSklep.Tables
     //    public string Name { get; set; }
     //}
     public virtual DbSet<Dostawy> Dostawys { get; set; }
-    public virtual DbSet<Transakcje> Transakcjes { get; set; }
-    public virtual DbSet<Produkty> Produktys { get; set; }
-    public virtual DbSet<Pracownicy> Pracownicys { get; set; }
-    public virtual DbSet<Klienci> Kliencis { get; set; }
+        public virtual DbSet<Transakcje> Transakcjes { get; set; }
+        public virtual DbSet<Produkty> Produktys { get; set; }
+        public virtual DbSet<Pracownicy> Pracownicys { get; set; }
+        public virtual DbSet<Klienci> Kliencis { get; set; }
+    }
 }

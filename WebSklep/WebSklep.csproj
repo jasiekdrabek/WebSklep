@@ -86,12 +86,29 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="1.aspx" />
+    <Content Include="2.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Style\AddEmployee.css" />
     <Content Include="Style\main.css" />
     <Content Include="Web.config" />
+    <Content Include="WebSklep.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="1.aspx.cs">
+      <DependentUpon>1.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="1.aspx.designer.cs">
+      <DependentUpon>1.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="2.aspx.cs">
+      <DependentUpon>2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="2.aspx.designer.cs">
+      <DependentUpon>2.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -103,6 +120,13 @@
     <Compile Include="Tables\Produkty.cs" />
     <Compile Include="Tables\Transakcje.cs" />
     <Compile Include="Tables\Użytkownik.cs" />
+    <Compile Include="WebSklep.aspx.cs">
+      <DependentUpon>WebSklep.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebSklep.aspx.designer.cs">
+      <DependentUpon>WebSklep.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
