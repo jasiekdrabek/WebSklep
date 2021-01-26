@@ -12,9 +12,10 @@ namespace WebSklep
 {
     public partial class WebSklep : System.Web.UI.Page
     {
-        
+
         protected void Page_Load(object sender, EventArgs e)
         {
+            TBSignUpPassword.Attributes["type"] = "password";
             if (!IsPostBack)
             {
                 SignUpPanel.Visible = false;
@@ -26,34 +27,7 @@ namespace WebSklep
 
         protected void SignUp_Click(object sender, EventArgs e)
         {
-            SignUpPanel.Visible = true;
-            SignUpDataPanel.Visible = false;
-            SignUpCodePanel.Visible = true;
-            SendEmail(TBSignUpEmail.Text);
-        }
-
-        protected void ReturnToSignUp_Click(object sender, EventArgs e)
-        {
-            SignUpPanel.Visible = true;
-            SignUpDataPanel.Visible = true;
-            SignUpCodePanel.Visible = false;
-        }
-        protected void ReturnToStart_Click(object sender, EventArgs e)
-        {
-            SignUpPanel.Visible = false;
-            LoginPanel.Visible = false;
-            ButtonStartLogin.Visible = true;
-            ButtonStartSignUp.Visible = true;
-        }
-
-        protected void ResendEmail_Click(object sender, EventArgs e)
-        {
-            SendEmail(TBSignUpEmail.Text);
-        }
-
-        protected void Activate_Click(object sender, EventArgs e)
-        {
-            if (TextBox2.Text == TBSignUpCode.Text)
+            if (TBSignUpPassword.Text == TextBox1.Text)
             {
                 if (ValidPassword(TBSignUpPassword.Text))
                 {
@@ -65,28 +39,88 @@ namespace WebSklep
                         var existingemploee = (from st in context.Pracownicys
                                                where st.Login == TBSignUPLogin.Text
                                                select st);
-                        if (existingcilents.Count() == 0 && existingemploee.Count() == 0)
+                        var existingcilentsemail = (from st in context.Kliencis
+                                                    where st.Email == TBSignUpEmail.Text
+                                                    select st);
+                        var existingemploeeemail = (from st in context.Pracownicys
+                                                    where st.Login == TBSignUpEmail.Text
+                                                    select st);
+                        if (existingcilentsemail.Count() == 0 && existingemploeeemail.Count() == 0)
                         {
-                            var klient = new Klienci
+                            if (existingcilents.Count() == 0 && existingemploee.Count() == 0)
                             {
-                                Login = TBSignUPLogin.Text,
-                                Hasło = TBSignUpPassword.Text,
-                                IlośćPieniędzy = 0,
-                                Email = TBSignUpEmail.Text
-                            };
-                            context.Kliencis.Add(klient);
-                            context.SaveChanges();
-                            MessageBox.Show(this, "Pomyślnie zarejestrowano nowego użytkownika");
+                                SignUpPanel.Visible = true;
+                                SignUpDataPanel.Visible = false;
+                                SignUpCodePanel.Visible = true;
+                                SendEmail(TBSignUpEmail.Text);
+                            }
+                            else
+                            {
+                                MessageBox.Show(this, "Istnieje już taki użytkownik");
+                            }
                         }
                         else
                         {
-                            MessageBox.Show(this, "Istnieje już taki użytkownik");
+                            MessageBox.Show(this, "Istnieje już użytkownik o takim e-mailu");
                         }
                     }
                 }
                 else
                 {
                     MessageBox.Show(this, "Hasło musi zawierać Wielką litere, małą literą oraz cyfrę");
+                }
+            }
+            else
+            {
+                MessageBox.Show(this, "Podane hasła nie są jednakowe");
+            }
+        }
+
+        protected void ReturnToSignUp_Click(object sender, EventArgs e)
+        {
+            SignUpPanel.Visible = true;
+            SignUpDataPanel.Visible = true;
+            SignUpCodePanel.Visible = false;
+        }
+        private void ReturnToStart()
+        {
+            SignUpPanel.Visible = false;
+            LoginPanel.Visible = false;
+            EmployeePanel.Visible = false;
+            ClientPanel.Visible = false;
+            ButtonStartLogin.Visible = true;
+            ButtonStartSignUp.Visible = true;
+        }
+        protected void ReturnToStart_Click(object sender, EventArgs e)
+        {
+            ReturnToStart();
+        }
+
+        protected void ResendEmail_Click(object sender, EventArgs e)
+        {
+            SendEmail(TBSignUpEmail.Text);
+        }
+
+        protected void Activate_Click(object sender, EventArgs e)
+        {
+            if (TextBox2.Text == TBSignUpCode.Text)
+            {
+                using (MyContext context = new MyContext())
+                {
+
+                    var klient = new Klienci
+                    {
+                        Login = TBSignUPLogin.Text,
+                        Hasło = TBSignUpPassword.Text,
+                        IlośćPieniędzy = 0,
+                        Email = TBSignUpEmail.Text
+                    };
+                    context.Kliencis.Add(klient);
+                    context.SaveChanges();
+                    MessageBox.Show(this, "Pomyślnie zarejestrowano nowego użytkownika");
+                    ReturnToStart();
+
+
                 }
             }
             else
@@ -114,7 +148,7 @@ namespace WebSklep
                 {
                     smtpClient.Connect("smtp.gmail.com", 465, true);
                     smtpClient.Authenticate("szkolenitechniczne2projekt@gmail.com", "78k7X7vSRbgAetG");
-                    smtpClient.Send(mailMessage);
+                    //smtpClient.Send(mailMessage);
                     smtpClient.Disconnect(true);
                 }
             }
@@ -144,6 +178,7 @@ namespace WebSklep
             using (MyContext context = new MyContext())
             {
                 Użytkownik użytkownik = null;
+                użytkownik = context.Kliencis.FirstOrDefault();
                 if (RBEmploeeOrClient.SelectedValue == "Klient")
                 {
                     użytkownik = context.Kliencis.FirstOrDefault(x => x.Login == TBLogin.Text && x.Hasło == TBPassword.Text);
@@ -154,14 +189,20 @@ namespace WebSklep
                 }
                 if (użytkownik != null)
                 {
+                    Session["UserID"] = użytkownik.Id.ToString();
+                    Session["UserName"] = użytkownik.Login.ToString();
                     if (użytkownik is Klienci)
                     {
                         ClientPanel.Visible = true;
+                        LoginInfoLabel.Text = "Witaj " + Session["UserName"];
                     }
                     if (użytkownik is Pracownicy)
                     {
                         EmployeePanel.Visible = true;
+                        LoginInfoLabelEmployee.Text = "Witaj " + Session["UserName"];
+
                     }
+                    LoginPanel.Visible = false;
                 }
                 else
                 {
@@ -173,12 +214,12 @@ namespace WebSklep
                                                 select st);
                     if (istniejacyklienci.Count() == 0 && istniejacypracownicy.Count() == 0)
                     {
-                        MessageBox.Show(this,"Podano błędny login");
+                        MessageBox.Show(this, "Podano błędny login");
                     }
                     else
                     {
                         {
-                            MessageBox.Show(this,"Podano błędne hasło");
+                            MessageBox.Show(this, "Podano błędne hasło");
                         }
                     }
                 }
@@ -208,6 +249,56 @@ namespace WebSklep
                 return true;
             }
             return false;
+        }
+
+        protected void Logout_Click(object sender, EventArgs e)
+        {
+            Session["UserID"] = null;
+            Session["UserName"] = null;
+            ReturnToStart();
+        }
+        protected void MenuClient_MenuItemClick(object sender, MenuEventArgs e)
+        {
+            for (int i = 0; i < MenuClient.Items.Count; i++)
+            {
+                if (MenuClient.Items[i].Value == MenuClient.SelectedValue)
+                {
+                    MultiViewClient.ActiveViewIndex = i;
+                }
+            }
+            for (int i = 0; i < MenuClient.Items.Count; i++)
+            {
+                if (i != MultiViewClient.ActiveViewIndex)
+                {
+                    MenuClient.Items[i].ImageUrl = "/Images/" + MenuClient.Items[i].Value + "unselectedtab.gif";
+                }
+                else
+                {
+                    MenuClient.Items[i].ImageUrl = "/Images/" + MenuClient.Items[i].Value + "selectedtab.gif";
+                }
+            }
+        }
+
+        protected void MenuEmploee_MenuItemClick(object sender, MenuEventArgs e)
+        {
+            for (int i = 0; i < MenuEmploee.Items.Count; i++)
+            {
+                if (MenuEmploee.Items[i].Value == MenuEmploee.SelectedValue)
+                {
+                    MultiViewEmploee.ActiveViewIndex = i;
+                }
+            }
+            for (int i = 0; i < MenuEmploee.Items.Count; i++)
+            {
+                if (i != MultiViewEmploee.ActiveViewIndex)
+                {
+                    MenuEmploee.Items[i].ImageUrl = "/Images/" + MenuEmploee.Items[i].Value + "unselectedtab.gif";
+                }
+                else
+                {
+                    MenuEmploee.Items[i].ImageUrl = "/Images/" + MenuEmploee.Items[i].Value + "selectedtab.gif";
+                }
+            }
         }
     }
     public static class MessageBox

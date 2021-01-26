@@ -86,29 +86,20 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="1.aspx" />
-    <Content Include="2.aspx" />
     <Content Include="Global.asax" />
-    <Content Include="Style\AddEmployee.css" />
+    <Content Include="Images\dostawyselectedtab.gif" />
+    <Content Include="Images\dostawyunselectedtab.gif" />
+    <Content Include="Images\informacjeselectedtab.gif" />
+    <Content Include="Images\informacjeunselectedtab.gif" />
+    <Content Include="Images\selectedtab.GIF" />
+    <Content Include="Images\zamówieniaselectedtab.gif" />
+    <Content Include="Images\zamówieniaunselectedtab.gif" />
     <Content Include="Style\main.css" />
+    <Content Include="Images\unselectedtab.GIF" />
     <Content Include="Web.config" />
     <Content Include="WebSklep.aspx" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="1.aspx.cs">
-      <DependentUpon>1.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="1.aspx.designer.cs">
-      <DependentUpon>1.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="2.aspx.cs">
-      <DependentUpon>2.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="2.aspx.designer.cs">
-      <DependentUpon>2.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

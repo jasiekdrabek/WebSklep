@@ -54,11 +54,11 @@
                 </div>
                 <div>
                 <asp:Label ID="LabelSignUpPassword" runat="server" Text="Hasło:"/>
-                <asp:TextBox ID="TBSignUpPassword" runat="server" />
+                <asp:TextBox ID="TBSignUpPassword" runat="server"  />
                 </div>
                 <div>
                 <asp:Label ID="LabelSignUpPassword2" runat="server" Text="Powtórz hasło:"/>
-                <asp:TextBox ID="TextBox1" runat="server" />
+                <asp:TextBox ID="TextBox1" runat="server" TextMode="Password" />
                 </div>
                 <div>
                 <asp:Label ID="LabelSignUpEmail" runat="server" Text="Email:"/>
@@ -86,26 +86,73 @@
                 </asp:Panel>
             </asp:Panel>
             <asp:Panel ID="ClientPanel" runat="server">
-        <div class="menu">
-                <ul>
-                    <li><a href="WebSlep.aspx"> Dodaj pracownika</a></li>
-                    <li><a href="1.aspx"> Dodaj pracownika</a></li>
-                    <li><a href="2.aspx"> Pracownicy</a></li>
-                </ul>
-            </div>
+                <asp:Label ID="LoginInfoLabel" runat="server" Text="Witaj" />
+                <asp:Button OnClick="Logout_Click" runat="server" Text="Wyloguj" />
+                <div>
+        <asp:Menu ID="MenuClient" Width="504px" runat="server" Orientation="Horizontal" StaticEnableDefaultPopOutImage="False" OnMenuItemClick="MenuClient_MenuItemClick">
+            <Items>
+                <asp:MenuItem ImageUrl="~/Images/selectedtab.GIF" Text= " " Value="informacje" ></asp:MenuItem>
+                <asp:MenuItem ImageUrl="~/Images/unselectedtab.GIF" Text= " "  Value="zamówienia"></asp:MenuItem>
+                <asp:MenuItem ImageUrl="~/Images/unselectedtab.GIF" Text=" "   Value="dostawy"></asp:MenuItem>
+            </Items>
+        </asp:Menu>
+        <asp:MultiView 
+            ID="MultiViewClient"
+            runat="server"
+            ActiveViewIndex="0"  >
+           <asp:View ID="ClientView1" runat="server"  >
+                            TAB VIEW 1
+                            INSERT YOUR CONENT IN HERE
+                            CHANGE SELECTED IMAGE URL AS NECESSARY
+             </asp:View>
+            <asp:View ID="ClientView2" runat="server">
+                            TAB VIEW 2
+                            INSERT YOUR CONENT IN HERE
+                            CHANGE SELECTED IMAGE URL AS NECESSARY
+            </asp:View>
+            <asp:View ID="ClientView3" runat="server">
+                          TAB VIEW 3
+                          INSERT YOUR CONENT IN HERE
+                          CHANGE SELECTED IMAGE URL AS NECESSARY
+            </asp:View>
+        </asp:MultiView></div>
                 </asp:Panel>
             <asp:Panel ID="EmployeePanel" runat="server">
-                <div class="menu">
-                <ul>
-                    <li><a href="WebSlep.aspx"> Dodaj pracownika</a></li>
-                </ul>
-            </div>
+                <asp:Label ID="LoginInfoLabelEmployee" runat="server" Text="Witaj" />
+                <asp:Button OnClick="Logout_Click" runat="server" Text="Wyloguj"/>
+                <div>
+        <asp:Menu ID="MenuEmploee" Width="504px" runat="server" Orientation="Horizontal" StaticEnableDefaultPopOutImage="False" OnMenuItemClick="MenuEmploee_MenuItemClick">
+            <Items>
+                <asp:MenuItem ImageUrl="~/Images/selectedtab.GIF" Text= " " Value="informacje" ></asp:MenuItem>
+                <asp:MenuItem ImageUrl="~/Images/unselectedtab.GIF" Text= " "  Value="zamówienia"></asp:MenuItem>
+                <asp:MenuItem ImageUrl="~/Images/unselectedtab.GIF" Text=" "   Value="dostawy"></asp:MenuItem>
+            </Items>
+        </asp:Menu>
+        <asp:MultiView 
+            ID="MultiViewEmploee"
+            runat="server"
+            ActiveViewIndex="0"  >
+           <asp:View ID="EmploeeTab1" runat="server"  >
+                            TAB VIEW 1
+                            INSERT YOUR CONENT IN HERE
+                            CHANGE SELECTED IMAGE URL AS NECESSARY
+             </asp:View>
+            <asp:View ID="EmploeeTab2" runat="server">
+                            TAB VIEW 2
+                            INSERT YOUR CONENT IN HERE
+                            CHANGE SELECTED IMAGE URL AS NECESSARY
+            </asp:View>
+            <asp:View ID="EmploeeTab3" runat="server">
+                          TAB VIEW 3
+                          INSERT YOUR CONENT IN HERE
+                          CHANGE SELECTED IMAGE URL AS NECESSARY
+            </asp:View>
+        </asp:MultiView></div>
             </asp:Panel>
         <div class="footer">
             <h2>Copyright@szkolenietechniczne2</h2>
         </div>
         </div>
-            </div>
     </form>
 </body>
 </html>
