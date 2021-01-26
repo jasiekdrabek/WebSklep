@@ -95,10 +95,7 @@
                 <asp:MenuItem ImageUrl="~/Images/zamówieniaunselectedtab.GIF" Text= " "  Value="zamówienia"></asp:MenuItem>
             </Items>
         </asp:Menu>
-        <asp:MultiView 
-            ID="MultiViewClient"
-            runat="server"
-            ActiveViewIndex="0"  >
+        <asp:MultiView  ID="MultiViewClient" runat="server" ActiveViewIndex="0"  >
            <asp:View ID="ClientView1" runat="server"  >
                <div>
                    <asp:label ID="LBSaldo" runat="server" />
@@ -138,21 +135,13 @@
                 <asp:Label ID="LoginInfoLabelEmployee" runat="server" Text="Witaj" />
                 <asp:Button OnClick="Logout_Click" runat="server" Text="Wyloguj"/>
                 <div>
-        <asp:Menu ID="MenuEmploee" Width="504px" runat="server" Orientation="Horizontal" StaticEnableDefaultPopOutImage="False" OnMenuItemClick="MenuEmploee_MenuItemClick">
-            <Items>
-                <asp:MenuItem ImageUrl="~/Images/selectedtab.GIF" Text= " " Value="informacje" ></asp:MenuItem>
-                <asp:MenuItem ImageUrl="~/Images/unselectedtab.GIF" Text= " "  Value="zamówienia"></asp:MenuItem>
-                <asp:MenuItem ImageUrl="~/Images/unselectedtab.GIF" Text=" "   Value="dostawy"></asp:MenuItem>
-            </Items>
-        </asp:Menu>
-        <asp:MultiView 
-            ID="MultiViewEmploee"
-            runat="server"
-            ActiveViewIndex="0"  >
+        <asp:Menu ID="MenuEmploee" Width="504px" runat="server" Orientation="Horizontal" StaticEnableDefaultPopOutImage="False" OnMenuItemClick="MenuEmploee_MenuItemClick" />
+        <asp:MultiView  ID="MultiViewEmploee" runat="server" ActiveViewIndex="0"  >
            <asp:View ID="EmploeeTab1" runat="server"  >
                             TAB VIEW 1
                             INSERT YOUR CONENT IN HERE
                             CHANGE SELECTED IMAGE URL AS NECESSARY
+               <asp:Panel ID="OwnerPanel" runat="server" />
              </asp:View>
             <asp:View ID="EmploeeTab2" runat="server">
                             TAB VIEW 2

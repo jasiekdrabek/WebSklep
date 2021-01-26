@@ -454,6 +454,15 @@ namespace WebSklep {
         protected global::System.Web.UI.WebControls.View EmploeeTab1;
         
         /// <summary>
+        /// OwnerPanel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel OwnerPanel;
+        
+        /// <summary>
         /// EmploeeTab2 control.
         /// </summary>
         /// <remarks>

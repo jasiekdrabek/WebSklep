@@ -197,11 +197,49 @@ namespace WebSklep
                         ClientPanel.Visible = true;
                         var klient = context.Kliencis.FirstOrDefault(x => x.Login == TBLogin.Text && x.Hasło == TBPassword.Text);
                         LoginInfoLabel.Text = "Witaj " + Session["UserName"];
-                        LBSaldo.Text = "Dostępne środki " + klient.IlośćPieniędzy; 
+                        LBSaldo.Text = "Dostępne środki " + klient.IlośćPieniędzy;
+                        Session["Role"] = "Client";
                     }
                     if (użytkownik is Pracownicy)
                     {
+                        var emploee = context.Pracownicys.FirstOrDefault(x => x.Login == TBLogin.Text && x.Hasło == TBPassword.Text);
                         EmployeePanel.Visible = true;
+                        Session["Role"] = "Employee";
+                        var Item1 = new MenuItem
+                        {
+                            ImageUrl = "~/Images/informacjeselectedtab.GIF",
+                            Text = " ",
+                            Value = "informacje"
+                        };
+                        MenuEmploee.Items.Add(Item1);
+                        if(emploee.Stanowisko != "Sprzedawca")
+                        {
+                            var Item = new MenuItem
+                            {
+                                ImageUrl = "~/Images/dostawyunselectedtab.GIF",
+                                Text = " ",
+                                Value = "dostawy"
+                            };
+                            MenuEmploee.Items.Add(Item);
+                        }
+                        if(emploee.Stanowisko != "Dostawca")
+                        {
+                            var Item = new MenuItem
+                            {
+                                ImageUrl = "~/Images/zamówieniaunselectedtab.GIF",
+                                Text = " ",
+                                Value = "zamówienia"
+                            };
+                            MenuEmploee.Items.Add(Item);
+                        }
+                        if(emploee.Stanowisko== "Właściciel")
+                        {
+                            OwnerPanel.Visible = true;
+                        }
+                        else
+                        {
+                            OwnerPanel.Visible = false;
+                        }
                         LoginInfoLabelEmployee.Text = "Witaj " + Session["UserName"];
                     }
                     LoginPanel.Visible = false;
@@ -257,6 +295,8 @@ namespace WebSklep
         {
             Session["UserID"] = null;
             Session["UserName"] = null;
+            Session["Role"] = null;
+            MenuEmploee.Items.Clear();
             ReturnToStart();
         }
         protected void MenuClient_MenuItemClick(object sender, MenuEventArgs e)
