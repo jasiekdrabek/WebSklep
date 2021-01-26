@@ -337,6 +337,69 @@ namespace WebSklep {
         protected global::System.Web.UI.WebControls.View ClientView1;
         
         /// <summary>
+        /// LBSaldo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LBSaldo;
+        
+        /// <summary>
+        /// TBSaldoPlus control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TBSaldoPlus;
+        
+        /// <summary>
+        /// TBSaldoMinus control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TBSaldoMinus;
+        
+        /// <summary>
+        /// TBChangePasswordOldPassword control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TBChangePasswordOldPassword;
+        
+        /// <summary>
+        /// TBChangePasswordNewPassword control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TBChangePasswordNewPassword;
+        
+        /// <summary>
+        /// TBChangeEmailOldEmail control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TBChangeEmailOldEmail;
+        
+        /// <summary>
+        /// TBChangeEmailNewEmail control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TBChangeEmailNewEmail;
+        
+        /// <summary>
         /// ClientView2 control.
         /// </summary>
         /// <remarks>
@@ -344,15 +407,6 @@ namespace WebSklep {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.View ClientView2;
-        
-        /// <summary>
-        /// ClientView3 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.View ClientView3;
         
         /// <summary>
         /// EmployeePanel control.

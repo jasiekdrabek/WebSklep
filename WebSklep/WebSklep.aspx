@@ -91,9 +91,8 @@
                 <div>
         <asp:Menu ID="MenuClient" Width="504px" runat="server" Orientation="Horizontal" StaticEnableDefaultPopOutImage="False" OnMenuItemClick="MenuClient_MenuItemClick">
             <Items>
-                <asp:MenuItem ImageUrl="~/Images/selectedtab.GIF" Text= " " Value="informacje" ></asp:MenuItem>
-                <asp:MenuItem ImageUrl="~/Images/unselectedtab.GIF" Text= " "  Value="zamówienia"></asp:MenuItem>
-                <asp:MenuItem ImageUrl="~/Images/unselectedtab.GIF" Text=" "   Value="dostawy"></asp:MenuItem>
+                <asp:MenuItem ImageUrl="~/Images/informacjeselectedtab.GIF" Text= " " Value="informacje" ></asp:MenuItem>
+                <asp:MenuItem ImageUrl="~/Images/zamówieniaunselectedtab.GIF" Text= " "  Value="zamówienia"></asp:MenuItem>
             </Items>
         </asp:Menu>
         <asp:MultiView 
@@ -101,19 +100,37 @@
             runat="server"
             ActiveViewIndex="0"  >
            <asp:View ID="ClientView1" runat="server"  >
-                            TAB VIEW 1
-                            INSERT YOUR CONENT IN HERE
-                            CHANGE SELECTED IMAGE URL AS NECESSARY
+               <div>
+                   <asp:label ID="LBSaldo" runat="server" />
+                   <asp:TextBox ID="TBSaldoPlus" runat="server" />
+                   <asp:Button Text="Dodaj" runat="server" OnClick="SaldoPlus_Click" />
+                   <asp:TextBox ID="TBSaldoMinus" runat="server" />
+                   <asp:Button Text="Zabierz" runat="server" OnClick="SaldoMinus_Click" />
+               </div>
+               <div>
+            <asp:Label Text="Zmiana hasła" runat="server" />
+               <asp:Label Text="Stare hasło:" runat="server" />
+                   <asp:TextBox ID="TBChangePasswordOldPassword" runat="server" />
+                <asp:Label Text="Nowe hasło:" runat="server" />
+                   <asp:TextBox ID="TBChangePasswordNewPassword" runat="server" />
+                   <asp:Button runat="server" Text="Zmień hasło" OnClick="ChangePassword_Click" />
+                   </div>
+               <div>
+            <asp:Label Text="Zmiana e-maila" runat="server" />
+               <asp:Label Text="Stary e-mail:" runat="server" />
+                   <asp:TextBox ID="TBChangeEmailOldEmail" runat="server" />
+                <asp:Label Text="Nowy e-mail:" runat="server" />
+                   <asp:TextBox ID="TBChangeEmailNewEmail" runat="server" />
+                   <asp:Button runat="server" Text="Zmień e-mail" OnClick="ChangeEmail_Click" />
+                   </div>
+               <div>
+                   <asp:Button Text="Usuń konto" runat="server" OnClick="DeleteAccount_Click" />
+               </div>
              </asp:View>
             <asp:View ID="ClientView2" runat="server">
                             TAB VIEW 2
                             INSERT YOUR CONENT IN HERE
                             CHANGE SELECTED IMAGE URL AS NECESSARY
-            </asp:View>
-            <asp:View ID="ClientView3" runat="server">
-                          TAB VIEW 3
-                          INSERT YOUR CONENT IN HERE
-                          CHANGE SELECTED IMAGE URL AS NECESSARY
             </asp:View>
         </asp:MultiView></div>
                 </asp:Panel>

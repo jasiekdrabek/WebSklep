@@ -12,10 +12,11 @@ namespace WebSklep
 {
     public partial class WebSklep : System.Web.UI.Page
     {
-
         protected void Page_Load(object sender, EventArgs e)
         {
             TBSignUpPassword.Attributes["type"] = "password";
+            TBChangePasswordNewPassword.Attributes["type"] = "password";
+            TBChangePasswordOldPassword.Attributes["type"] = "password";
             if (!IsPostBack)
             {
                 SignUpPanel.Visible = false;
@@ -194,13 +195,14 @@ namespace WebSklep
                     if (użytkownik is Klienci)
                     {
                         ClientPanel.Visible = true;
+                        var klient = context.Kliencis.FirstOrDefault(x => x.Login == TBLogin.Text && x.Hasło == TBPassword.Text);
                         LoginInfoLabel.Text = "Witaj " + Session["UserName"];
+                        LBSaldo.Text = "Dostępne środki " + klient.IlośćPieniędzy; 
                     }
                     if (użytkownik is Pracownicy)
                     {
                         EmployeePanel.Visible = true;
                         LoginInfoLabelEmployee.Text = "Witaj " + Session["UserName"];
-
                     }
                     LoginPanel.Visible = false;
                 }
@@ -298,6 +300,130 @@ namespace WebSklep
                 {
                     MenuEmploee.Items[i].ImageUrl = "/Images/" + MenuEmploee.Items[i].Value + "selectedtab.gif";
                 }
+            }
+        }
+
+        protected void ChangePassword_Click(object sender, EventArgs e)
+        {
+            using (var context = new MyContext())
+            {
+                var user = context.Kliencis.FirstOrDefault(x => x.Login == TBLogin.Text );
+                if (TBChangePasswordOldPassword.Text == user.Hasło)
+                {
+                    if (ValidPassword(TBChangePasswordNewPassword.Text))
+                    {
+                        user.Hasło = TBChangePasswordNewPassword.Text;
+                            context.SaveChanges();
+                        MessageBox.Show(this,"Pomyślnie zmieniono hasło");
+                    }
+                    else
+                    {
+                        MessageBox.Show(this,"Nowe hasło musi zawierać małą literę,wielką literę oraz cyfrę");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show(this,"Podane hasło nie jest prawidłowe");
+                }
+            }
+        }
+        protected void ChangeEmail_Click(object sender, EventArgs e)
+        {
+            using (var context = new MyContext())
+            {
+                var user = context.Kliencis.FirstOrDefault(x => x.Login == TBLogin.Text );
+                if (TBChangeEmailOldEmail.Text == user.Email)
+                {
+                    if (IsEmail(TBChangeEmailNewEmail.Text))
+                    {
+                        user.Email = TBChangeEmailNewEmail.Text;
+                        context.SaveChanges();
+                        MessageBox.Show(this, "Pomyślnie zmieniono e-mail");
+                    }
+                    else
+                    {
+                        MessageBox.Show(this, "Nowy e-mail nie jest e-mailem");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show(this, "Podany e-mail nie jest prawidowy");
+                }
+            }
+        }
+
+        protected void DeleteAccount_Click(object sender, EventArgs e)
+        {
+            using (var context = new MyContext())
+            {
+                var user = context.Kliencis.FirstOrDefault(x => x.Login == TBLogin.Text );
+                context.Kliencis.Attach(user);
+                context.Kliencis.Remove(user);
+                context.SaveChanges();
+            }
+
+        }
+
+        protected void SaldoPlus_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using (var context = new MyContext())
+                {
+                    var user = context.Kliencis.FirstOrDefault(x => x.Login == TBLogin.Text);
+
+
+                    double liczba = double.Parse(TBSaldoPlus.Text);
+                    if (liczba >= 0)
+                    {
+                            user.IlośćPieniędzy += liczba;
+                        LBSaldo.Text = "Dostępne środki " + user.IlośćPieniędzy;
+                    }
+                    else
+                    {
+                        MessageBox.Show(this, "wpisz liczbe nieujemną");
+                    }
+                    context.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(this, ex.Message);
+            }
+        }
+
+        protected void SaldoMinus_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using (var context = new MyContext())
+                {
+                    var user = context.Kliencis.FirstOrDefault(x => x.Login == TBLogin.Text );
+
+
+                    double liczba = double.Parse(TBSaldoMinus.Text);
+                    if (liczba >= 0)
+                    {
+                        if (liczba <= user.IlośćPieniędzy)
+                        {
+                            user.IlośćPieniędzy -= liczba;
+                            LBSaldo.Text = "Dostępne środki " + user.IlośćPieniędzy;
+                        }
+                        else
+                        {
+                            MessageBox.Show(this,"Za dużo chcesz zabrać z konta");
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show(this, "wpisz liczbe nieujemną");
+                    }
+                    context.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(this,ex.Message);
             }
         }
     }
