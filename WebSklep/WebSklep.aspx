@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="WebSklep.aspx.cs" Inherits="WebSklep.WebSklep" %>
+﻿<%@ Page Language="C#"  AutoEventWireup="true" CodeBehind="WebSklep.aspx.cs" Inherits="WebSklep.WebSklep" %>
 
 <!DOCTYPE html>
 
@@ -99,13 +99,17 @@
            <asp:View ID="ClientView1" runat="server"  >
                <div>
                    <asp:label ID="LBSaldo" runat="server" />
+                </div>
+               <div>
                    <asp:TextBox ID="TBSaldoPlus" runat="server" />
                    <asp:Button Text="Dodaj" runat="server" OnClick="SaldoPlus_Click" />
                    <asp:TextBox ID="TBSaldoMinus" runat="server" />
                    <asp:Button Text="Zabierz" runat="server" OnClick="SaldoMinus_Click" />
                </div>
                <div>
-            <asp:Label Text="Zmiana hasła" runat="server" />
+            <asp:Label Text="Zmiana hasła:" runat="server" />
+                </div>
+               <div>
                <asp:Label Text="Stare hasło:" runat="server" />
                    <asp:TextBox ID="TBChangePasswordOldPassword" runat="server" />
                 <asp:Label Text="Nowe hasło:" runat="server" />
@@ -113,7 +117,9 @@
                    <asp:Button runat="server" Text="Zmień hasło" OnClick="ChangePassword_Click" />
                    </div>
                <div>
-            <asp:Label Text="Zmiana e-maila" runat="server" />
+            <asp:Label Text="Zmiana e-maila:" runat="server" />
+                </div>
+               <div>
                <asp:Label Text="Stary e-mail:" runat="server" />
                    <asp:TextBox ID="TBChangeEmailOldEmail" runat="server" />
                 <asp:Label Text="Nowy e-mail:" runat="server" />
@@ -125,9 +131,75 @@
                </div>
              </asp:View>
             <asp:View ID="ClientView2" runat="server">
-                            TAB VIEW 2
-                            INSERT YOUR CONENT IN HERE
-                            CHANGE SELECTED IMAGE URL AS NECESSARY
+                <div>
+                <asp:Label Text="Twój koszyk:" runat="server" />
+                </div>
+                <div>
+                <asp:GridView ID="GridView1" runat="server" HeaderStyle-BackColor="#3AC0F2" HeaderStyle-ForeColor="White" AutoGenerateColumns="false">
+    <Columns>
+        <asp:TemplateField>
+            <ItemTemplate>
+                <asp:CheckBox  ID="chkRow" runat="server" />
+            </ItemTemplate>
+        </asp:TemplateField>
+        <asp:BoundField DataField="Nazwa" HeaderText="Nazwa" ItemStyle-Width="150" />
+        <asp:BoundField DataField="Ilość" HeaderText="Ilość" ItemStyle-Width="150" />
+        <asp:BoundField DataField="Cena" HeaderText="Cena" ItemStyle-Width="150" />
+    </Columns>
+</asp:GridView>
+                    </div>
+                <div>
+                    <asp:button runat="server" onClick = "DeleteTransactio_Click"  Text="Usuń z koszyka" />
+                    <asp:Button runat="server" OnClick="Transaction_Click" Text="Złóż zamówienie" />
+                </div>
+                <div>
+                <asp:Label  Text="Wybierz produkt i wpisz ilość:" runat="server"/>
+                <asp:TextBox runat="server" ID="TBProductQuantity" />
+                <asp:DropDownList AutoPostBack="false" ID="DDLProductName" runat="server" />
+                <asp:Button runat="server" OnClick="AddToTransactios_Click" Text="Dodaj do zamówienia" />
+                </div>
+                <div>
+                    <asp:Label Text="W trakcie:" runat="server" />
+                </div>
+                <div>
+<asp:GridView ID="GridView2" runat="server" HeaderStyle-BackColor="#3AC0F2" HeaderStyle-ForeColor="White" AutoGenerateColumns="false">
+    <Columns>
+        <asp:TemplateField>
+        </asp:TemplateField>
+        <asp:BoundField DataField="Nazwa" HeaderText="Nazwa" ItemStyle-Width="150" />
+        <asp:BoundField DataField="Ilość" HeaderText="Ilość" ItemStyle-Width="150" />
+        <asp:BoundField DataField="Cena" HeaderText="Cena" ItemStyle-Width="150" />
+    </Columns>
+</asp:GridView>
+                    </div>
+                <div>
+                    <asp:Label Text="Zrealizowane:" runat="server" />
+                </div>
+                <div>
+<asp:GridView ID="GridView3" runat="server" HeaderStyle-BackColor="#3AC0F2" HeaderStyle-ForeColor="White" AutoGenerateColumns="false">
+    <Columns>
+        <asp:TemplateField>
+        </asp:TemplateField>
+        <asp:BoundField DataField="Nazwa" HeaderText="Nazwa" ItemStyle-Width="150" />
+        <asp:BoundField DataField="Ilość" HeaderText="Ilość" ItemStyle-Width="150" />
+        <asp:BoundField DataField="Cena" HeaderText="Cena" ItemStyle-Width="150" />
+    </Columns>
+</asp:GridView>
+                    </div>
+                <div>
+                    <asp:Label Text="Odrzucone:" runat="server" />
+                </div>
+                <div>
+<asp:GridView ID="GridView4" runat="server" HeaderStyle-BackColor="#3AC0F2" HeaderStyle-ForeColor="White" AutoGenerateColumns="false">
+    <Columns>
+        <asp:TemplateField>
+        </asp:TemplateField>
+        <asp:BoundField DataField="Nazwa" HeaderText="Nazwa" ItemStyle-Width="150" />
+        <asp:BoundField DataField="Ilość" HeaderText="Ilość" ItemStyle-Width="150" />
+        <asp:BoundField DataField="Cena" HeaderText="Cena" ItemStyle-Width="150" />
+    </Columns>
+</asp:GridView>
+                    </div>
             </asp:View>
         </asp:MultiView></div>
                 </asp:Panel>
@@ -157,6 +229,7 @@
             </asp:Panel>
         <div class="footer">
             <h2>Copyright@szkolenietechniczne2</h2>
+        </div>
         </div>
         </div>
     </form>
