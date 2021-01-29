@@ -490,11 +490,11 @@ namespace WebSklep
                     MenuEmploee.Items[i].ImageUrl = "/Images/" + MenuEmploee.Items[i].Value + "selectedtab.gif";
                     MultiViewEmploee.ActiveViewIndex = i;
                 }
+            }
                 if (MenuEmploee.SelectedValue == "dostawy")
                 {
                     MultiViewEmploee.ActiveViewIndex = 2;
                 }
-            }
         }
 
         protected void ChangePassword_Click(object sender, EventArgs e)
