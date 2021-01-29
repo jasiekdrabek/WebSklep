@@ -1,4 +1,5 @@
-﻿using MailKit.Net.Smtp;
+﻿
+using MailKit.Net.Smtp;
 using MimeKit;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,13 @@ namespace WebSklep
                     var productname = (from st in context.Produktys select st.Nazwa);
                     DDLProductName.DataSource = productname.ToList();
                     DDLProductName.DataBind();
+                    var ListOfEmployee = (from st in context.Pracownicys
+                                          where st.Stanowisko != "Właściciel"
+                                          select st.Login);
+                    DDLFireEmployee.DataSource = ListOfEmployee.ToList();
+                    DDLFireEmployee.DataBind();
+                    DDLDelivery.DataSource = productname.ToList();
+                    DDLDelivery.DataBind();
                 }
             }
             if (Session["Role"] != null)
@@ -40,6 +48,9 @@ namespace WebSklep
                     var Zrealizowane = new DataTable();
                     var Odrzucone = new DataTable();
                     WPrzygotowaniu.Columns.AddRange(new DataColumn[3] { new DataColumn("Nazwa"), new DataColumn("Ilość"), new DataColumn("Cena") });
+                    Zrealizowane.Columns.AddRange(new DataColumn[3] { new DataColumn("Nazwa"), new DataColumn("Ilość"), new DataColumn("Cena") });
+                    Odrzucone.Columns.AddRange(new DataColumn[3] { new DataColumn("Nazwa"), new DataColumn("Ilość"), new DataColumn("Cena") });
+                    WTrakcie.Columns.AddRange(new DataColumn[3] { new DataColumn("Nazwa"), new DataColumn("Ilość"), new DataColumn("Cena") });
                     using (var context = new MyContext())
                     {
                         var productname = (from st in context.Produktys select st.Nazwa);
@@ -95,6 +106,56 @@ namespace WebSklep
                         GridView4.DataBind();
                     }
                 }
+                if (Session["Role"].ToString() == "Employee")
+                {
+                    using (var context = new MyContext())
+                    {
+                        DataTable zamówienia = new DataTable();
+                        DataTable produkty = new DataTable();
+                        produkty.Columns.AddRange(new DataColumn[2] { new DataColumn("Produkt"), new DataColumn("Ilość") });
+                        zamówienia.Columns.AddRange(new DataColumn[4] { new DataColumn("Klient"), new DataColumn("Nazwa"), new DataColumn("Ilość"), new DataColumn("Cena") });
+                        var product = (from st in context.Produktys select st);
+                        foreach (var produkt in product)
+                        {
+                            produkty.Rows.Add(produkt.Nazwa, produkt.Ilość);
+                        }
+                        var transakcje = (from st in context.Transakcjes select st);
+                        foreach (var transakcja in transakcje)
+                        {
+                            transakcja.Klienci = context.Kliencis.First(x => x.Id ==
+                            context.Transakcjes.FirstOrDefault(y => y.Id == transakcja.Id).Klienci.Id);
+                            transakcja.Pracownicy = context.Pracownicys.FirstOrDefault(x => x.Id ==
+                             context.Transakcjes.FirstOrDefault(y => y.Id == transakcja.Id).Pracownicy.Id);
+                            transakcja.Produkty = context.Produktys.FirstOrDefault(x => x.Id ==
+                            context.Transakcjes.FirstOrDefault(y => y.Id == transakcja.Id).Produkty.Id);
+                            if (transakcja.StatusTransakcji == "W trakcie realizacji")
+                            {
+                                zamówienia.Rows.Add(transakcja.Klienci.Login, transakcja.Produkty.Nazwa, transakcja.IlośćKupionegoProduktu, transakcja.Cena);
+                            }
+                        }
+                        int i = 0;
+                        foreach (GridViewRow row in GridView5.Rows)
+                        {
+                            if (row.RowType == DataControlRowType.DataRow)
+                            {
+                                CheckBox chkRow = (row.Cells[0].FindControl("chkRow1") as CheckBox);
+                                if (chkRow.Checked)
+                                {
+                                    i += 1;
+                                }
+                            }
+                        }
+                        if (i == 0)
+                        {
+                            GridView5.DataSource = zamówienia;
+                            GridView5.DataBind();
+                        }
+                        GridView6.DataSource = produkty;
+                        GridView6.DataBind();
+                        GridView7.DataSource = produkty;
+                        GridView7.DataBind();
+                    }
+                }
             }
         }
 
@@ -104,7 +165,7 @@ namespace WebSklep
             {
                 if (ValidPassword(TBSignUpPassword.Text))
                 {
-                    if (TBLogin.Text != "")
+                    if (TBSignUPLogin.Text != "")
                     {
                         using (MyContext context = new MyContext())
                         {
@@ -212,24 +273,32 @@ namespace WebSklep
         {
             if (IsEmail(email))
             {
-                var random = new Random();
-                var number = random.Next(1000, 10000);
-                TextBox2.Text = number.ToString();
-                var mailMessage = new MimeMessage();
-                mailMessage.From.Add(new MailboxAddress("", "szkolenitechniczne2projekt@gmail.com"));
-                mailMessage.To.Add(new MailboxAddress("", email));
-                mailMessage.Subject = "Kod aktywacyjny";
-                mailMessage.Body = new TextPart("plain")
+                try
                 {
-                    Text = number.ToString()
-                };
+                    var random = new Random();
+                    var number = random.Next(1000, 10000);
+                    TextBox2.Text = number.ToString();
+                    var mailMessage = new MimeMessage();
+                    mailMessage.From.Add(new MailboxAddress("", "szkolenitechniczne2projekt@gmail.com"));
+                    mailMessage.To.Add(new MailboxAddress("", email));
+                    mailMessage.Subject = "Kod aktywacyjny";
+                    mailMessage.Body = new TextPart("plain")
+                    {
+                        Text = number.ToString()
+                    };
 
-                using (var smtpClient = new SmtpClient())
+
+                    using (var smtpClient = new SmtpClient())
+                    {
+                        smtpClient.Connect("smtp.gmail.com", 465, true);
+                        smtpClient.Authenticate("szkolenitechniczne2projekt@gmail.com", "78k7X7vSRbgAetG");
+                        smtpClient.Send(mailMessage);
+                        smtpClient.Disconnect(true);
+                    }
+                }
+                catch (Exception ex)
                 {
-                    smtpClient.Connect("smtp.gmail.com", 465, true);
-                    smtpClient.Authenticate("szkolenitechniczne2projekt@gmail.com", "78k7X7vSRbgAetG");
-                    smtpClient.Send(mailMessage);
-                    smtpClient.Disconnect(true);
+                    MessageBox.Show(this, ex.Message);
                 }
             }
             else
@@ -291,16 +360,6 @@ namespace WebSklep
                             Value = "informacje"
                         };
                         MenuEmploee.Items.Add(Item1);
-                        if (emploee.Stanowisko != "Sprzedawca")
-                        {
-                            var Item = new MenuItem
-                            {
-                                ImageUrl = "~/Images/dostawyunselectedtab.GIF",
-                                Text = " ",
-                                Value = "dostawy"
-                            };
-                            MenuEmploee.Items.Add(Item);
-                        }
                         if (emploee.Stanowisko != "Dostawca")
                         {
                             var Item = new MenuItem
@@ -308,6 +367,16 @@ namespace WebSklep
                                 ImageUrl = "~/Images/zamówieniaunselectedtab.GIF",
                                 Text = " ",
                                 Value = "zamówienia"
+                            };
+                            MenuEmploee.Items.Add(Item);
+                        }
+                        if (emploee.Stanowisko != "Sprzedawca")
+                        {
+                            var Item = new MenuItem
+                            {
+                                ImageUrl = "~/Images/dostawyunselectedtab.GIF",
+                                Text = " ",
+                                Value = "dostawy"
                             };
                             MenuEmploee.Items.Add(Item);
                         }
@@ -322,6 +391,10 @@ namespace WebSklep
                         LoginInfoLabelEmployee.Text = "Witaj " + Session["UserName"];
                     }
                     LoginPanel.Visible = false;
+                    MultiViewClient.ActiveViewIndex = 0;
+                    MenuClient.Items[0].Selected = true;
+                    MenuClient_MenuItemClick(sender, e as MenuEventArgs);
+                    MultiViewEmploee.ActiveViewIndex = 0;
                 }
                 else
                 {
@@ -380,13 +453,16 @@ namespace WebSklep
         }
         protected void MenuClient_MenuItemClick(object sender, MenuEventArgs e)
         {
-            for (int i = 0; i < MenuClient.Items.Count; i++)
+
+            if (MenuClient.SelectedValue == "informacje")
             {
-                if (MenuClient.Items[i].Value == MenuClient.SelectedValue)
-                {
-                    MultiViewClient.ActiveViewIndex = i;
-                }
+                MultiViewClient.ActiveViewIndex = 0;
             }
+            if (MenuClient.SelectedValue == "zamówienia")
+            {
+                MultiViewClient.ActiveViewIndex = 1;
+            }
+
             for (int i = 0; i < MenuClient.Items.Count; i++)
             {
                 if (i != MultiViewClient.ActiveViewIndex)
@@ -404,20 +480,18 @@ namespace WebSklep
         {
             for (int i = 0; i < MenuEmploee.Items.Count; i++)
             {
-                if (MenuEmploee.Items[i].Value == MenuEmploee.SelectedValue)
-                {
-                    MultiViewEmploee.ActiveViewIndex = i;
-                }
-            }
-            for (int i = 0; i < MenuEmploee.Items.Count; i++)
-            {
-                if (i != MultiViewEmploee.ActiveViewIndex)
+                if (MenuEmploee.Items[i].Value != MenuEmploee.SelectedValue)
                 {
                     MenuEmploee.Items[i].ImageUrl = "/Images/" + MenuEmploee.Items[i].Value + "unselectedtab.gif";
                 }
                 else
                 {
                     MenuEmploee.Items[i].ImageUrl = "/Images/" + MenuEmploee.Items[i].Value + "selectedtab.gif";
+                    MultiViewEmploee.ActiveViewIndex = i;
+                }
+                if (MenuEmploee.SelectedValue == "dostawy")
+                {
+                    MultiViewEmploee.ActiveViewIndex = 2;
                 }
             }
         }
@@ -456,6 +530,54 @@ namespace WebSklep
                     if (IsEmail(TBChangeEmailNewEmail.Text))
                     {
                         user.Email = TBChangeEmailNewEmail.Text;
+                        context.SaveChanges();
+                        MessageBox.Show(this, "Pomyślnie zmieniono e-mail");
+                    }
+                    else
+                    {
+                        MessageBox.Show(this, "Nowy e-mail nie jest e-mailem");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show(this, "Podany e-mail nie jest prawidowy");
+                }
+            }
+        }
+        protected void ChangePasswordEmployee_Click(object sender, EventArgs e)
+        {
+            using (var context = new MyContext())
+            {
+                var user = context.Pracownicys.FirstOrDefault(x => x.Login == TBLogin.Text);
+                if (TBChangePasswordOldPasswordEmployee.Text == user.Hasło)
+                {
+                    if (ValidPassword(TBChangePasswordNewPasswordEmployee.Text))
+                    {
+                        user.Hasło = TBChangePasswordNewPasswordEmployee.Text;
+                        context.SaveChanges();
+                        MessageBox.Show(this, "Pomyślnie zmieniono hasło");
+                    }
+                    else
+                    {
+                        MessageBox.Show(this, "Nowe hasło musi zawierać małą literę,wielką literę oraz cyfrę");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show(this, "Podane hasło nie jest prawidłowe");
+                }
+            }
+        }
+        protected void ChangeEmailEmployee_Click(object sender, EventArgs e)
+        {
+            using (var context = new MyContext())
+            {
+                var user = context.Pracownicys.FirstOrDefault(x => x.Login == TBLogin.Text);
+                if (TBChangeEmailOldEmailEmployee.Text == user.Email)
+                {
+                    if (IsEmail(TBChangeEmailNewEmailEmployee.Text))
+                    {
+                        user.Email = TBChangeEmailNewEmailEmployee.Text;
                         context.SaveChanges();
                         MessageBox.Show(this, "Pomyślnie zmieniono e-mail");
                     }
@@ -510,7 +632,6 @@ namespace WebSklep
                 MessageBox.Show(this, ex.Message);
             }
         }
-
         protected void SaldoMinus_Click(object sender, EventArgs e)
         {
             try
@@ -564,6 +685,9 @@ namespace WebSklep
                             Produkty = produkt,
                             Cena = context.Produktys.First(x => x.Nazwa == produkt.Nazwa).Cena * ilość
                         };
+                        transaction.Cena = transaction.Cena * 100;
+                        transaction.Cena = Math.Round(transaction.Cena);
+                        transaction.Cena = transaction.Cena / 100;
                         context.Transakcjes.Add(transaction);
                         context.SaveChanges();
                         Page_Load(sender, e);
@@ -598,19 +722,21 @@ namespace WebSklep
                             var product = context.Produktys.First(x => x.Nazwa == cell1);
                             var user1 = Int32.Parse(Session["UserID"].ToString());
                             var user = context.Kliencis.First(x => x.Id == user1);
-                            var transakcja1 = (from st in context.Transakcjes where st.Cena==cell3 && 
-                                              st.IlośćKupionegoProduktu == cell2 &&
-                                              st.Klienci.Id == user.Id && st.Produkty.Id == product.Id  select st);
+                            var transakcja1 = (from st in context.Transakcjes
+                                               where st.Cena == cell3 &&
+               st.IlośćKupionegoProduktu == cell2 &&
+               st.Klienci.Id == user.Id && st.Produkty.Id == product.Id
+                                               select st);
                             var transakcja = transakcja1.First();
                             context.Transakcjes.Attach(transakcja);
-                                context.Transakcjes.Remove(transakcja);
-                            
+                            context.Transakcjes.Remove(transakcja);
+
                             context.SaveChanges();
                         }
                     }
                     else
                     {
-                        dt.Rows.Add(row.Cells[1].Text,row.Cells[2].Text,row.Cells[3].Text);
+                        dt.Rows.Add(row.Cells[1].Text, row.Cells[2].Text, row.Cells[3].Text);
                     }
                 }
             }
@@ -619,20 +745,236 @@ namespace WebSklep
         }
         protected void Transaction_Click(object sender, EventArgs e)
         {
+            DataTable dt = new DataTable();
+            dt.Columns.AddRange(new DataColumn[3] { new DataColumn("Nazwa"), new DataColumn("Ilość"), new DataColumn("Cena") });
+            foreach (GridViewRow row in GridView1.Rows)
+            {
+                if (row.RowType == DataControlRowType.DataRow)
+                {
+                    var cell1 = row.Cells[1].Text;
+                    var cell2 = int.Parse(row.Cells[2].Text);
+                    var cell3 = double.Parse(row.Cells[3].Text);
+                    CheckBox chkRow = (row.Cells[0].FindControl("chkRow") as CheckBox);
+                    if (chkRow.Checked)
+                    {
+                        using (var context = new MyContext())
+                        {
+                            var product = context.Produktys.First(x => x.Nazwa == cell1);
+                            var user1 = Int32.Parse(Session["UserID"].ToString());
+                            var user = context.Kliencis.First(x => x.Id == user1);
+                            var transakcja1 = (from st in context.Transakcjes
+                                               where st.Cena == cell3 &&
+               st.IlośćKupionegoProduktu == cell2 &&
+               st.Klienci.Id == user.Id && st.Produkty.Id == product.Id
+                                               select st);
+                            var transakcja = transakcja1.First();
+                            transakcja.StatusTransakcji = "W trakcie realizacji";
+                            context.SaveChanges();
+                        }
+                    }
+                    else
+                    {
+                        dt.Rows.Add(row.Cells[1].Text, row.Cells[2].Text, row.Cells[3].Text);
+                    }
+                }
+                GridView1.DataSource = dt;
+                GridView1.DataBind();
+            }
+        }
+        protected void Hire_Click(object sender, EventArgs e)
+        {
             using (var context = new MyContext())
             {
-                var user = Int32.Parse(Session["UserID"].ToString());
-                var transakcje1 = (from st in context.Transakcjes where st.Klienci.Id == user select st);
-                var transakcje = (from st in transakcje1 where st.StatusTransakcji == "W przygotowaniu" select st);
-
-                foreach (var transakcja in transakcje)
+                var pracownicy = (from st in context.Pracownicys where st.Login == TBNewEmployeeLogin.Text select st);
+                if (pracownicy.Count() == 0)
                 {
-                    transakcja.StatusTransakcji = "W trakcie realizacji";
+                    var stanowisko = DDLNewEmployeePosition.SelectedValue.ToString();
+                    var wynagrodzenie = Int32.Parse(DDLNewEmployeeSalary.SelectedValue.ToString());
+                    var pracownik = new Pracownicy
+                    {
+                        Login = TBNewEmployeeLogin.Text,
+                        Hasło = TBNewEmployeeLogin.Text,
+                        Email = TBNewEmployeeLogin.Text + "@sklepzprzyprawami.com",
+                        Stanowisko = stanowisko,
+                        Wynagrodzenie = wynagrodzenie
+                    };
+                    context.Pracownicys.Add(pracownik);
+                    context.SaveChanges();
 
                 }
+                else
+                {
+                    MessageBox.Show(this, "Ten pracownik już u nas pracuje");
+                }
+            }
+            using (var context = new MyContext())
+            {
+                var ListOfEmployee = (from st in context.Pracownicys
+                                      where st.Stanowisko != "Właściciel"
+                                      select st.Login);
+                DDLFireEmployee.DataSource = ListOfEmployee.ToList();
+                DDLFireEmployee.DataBind();
+            }
+        }
+
+        protected void Fire_Click(object sender, EventArgs e)
+        {
+            using (var context = new MyContext())
+            {
+                context.Pracownicys.Remove(context.Pracownicys.FirstOrDefault(a => a.Id ==
+                context.Pracownicys.FirstOrDefault(y => y.Login == DDLFireEmployee.Text).Id));
                 context.SaveChanges();
             }
+            using (var context = new MyContext())
+            {
+                var ListOfEmployee = (from st in context.Pracownicys
+                                      where st.Stanowisko != "Właściciel"
+                                      select st.Login);
+                DDLFireEmployee.DataSource = ListOfEmployee.ToList();
+                DDLFireEmployee.DataBind();
+            }
+        }
 
+        protected void AcceptTransaction_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DataTable dt = new DataTable();
+                dt.Columns.AddRange(new DataColumn[4] { new DataColumn("Klient"), new DataColumn("Nazwa"), new DataColumn("Ilość"), new DataColumn("Cena") });
+                foreach (GridViewRow row in GridView5.Rows)
+                {
+                    if (row.RowType == DataControlRowType.DataRow)
+                    {
+                        var cell1 = row.Cells[1].Text;
+                        var cell2 = row.Cells[2].Text;
+                        var cell3 = int.Parse(row.Cells[3].Text);
+                        var cell4 = double.Parse(row.Cells[4].Text);
+                        CheckBox chkRow = (row.Cells[0].FindControl("chkRow1") as CheckBox);
+                        if (chkRow.Checked)
+                        {
+                            using (var context = new MyContext())
+                            {
+                                var product = context.Produktys.FirstOrDefault(x => x.Nazwa == cell2);
+                                var user = context.Kliencis.FirstOrDefault(x => x.Login == cell1);
+                                var transakcja1 = (from st in context.Transakcjes
+                                                   where st.Cena == cell4 &&
+                   st.IlośćKupionegoProduktu == cell3 &&
+                   st.Klienci.Id == user.Id && st.Produkty.Id == product.Id
+                                                   select st);
+                                var transakcja = transakcja1.FirstOrDefault();
+                                if (transakcja != null)
+                                {
+                                    if (context.Produktys.FirstOrDefault(x => x.Id == product.Id).Ilość >=
+                                context.Transakcjes.FirstOrDefault(x => x.Id == transakcja.Id).IlośćKupionegoProduktu)
+                                    {
+                                        if (context.Kliencis.FirstOrDefault(x => x.Id == user.Id).IlośćPieniędzy >=
+                                        context.Transakcjes.FirstOrDefault(y => y.Id == transakcja.Id).Cena)
+                                        {
+                                                transakcja.StatusTransakcji = "Zrealizowana";
+                                            product.Ilość -= transakcja.IlośćKupionegoProduktu;
+                                            user.IlośćPieniędzy -= transakcja.Cena;
+                                                context.SaveChanges();
+                                        }
+                                        else
+                                        {
+                                            MessageBox.Show(this, "Klient nie ma tyle pieniędzy");
+                                        }
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show(this, "Nie mamy tyle sztuk tego produktu");
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            dt.Rows.Add(row.Cells[1].Text, row.Cells[2].Text, row.Cells[3].Text, row.Cells[4].Text);
+                        }
+                        GridView5.DataSource = dt;
+                        GridView5.DataBind();
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(this, ex.Message);
+            }
+        }
+        protected void DeclineTransaction_Click(object sender, EventArgs e)
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.AddRange(new DataColumn[4] { new DataColumn("Klient"), new DataColumn("Nazwa"), new DataColumn("Ilość"), new DataColumn("Cena") });
+            foreach (GridViewRow row in GridView5.Rows)
+            {
+                if (row.RowType == DataControlRowType.DataRow)
+                {
+                    var cell1 = row.Cells[1].Text;
+                    var cell2 = row.Cells[2].Text;
+                    var cell3 = int.Parse(row.Cells[3].Text);
+                    var cell4 = double.Parse(row.Cells[4].Text);
+                    CheckBox chkRow = (row.Cells[0].FindControl("chkRow1") as CheckBox);
+                    if (chkRow.Checked)
+                    {
+                        using (var context = new MyContext())
+                        {
+                            var product = context.Produktys.FirstOrDefault(x => x.Nazwa == cell2);
+                            var user = context.Kliencis.FirstOrDefault(x => x.Login == cell1);
+                            var transakcja1 = (from st in context.Transakcjes
+                                               where st.Cena == cell4 &&
+               st.IlośćKupionegoProduktu == cell3 &&
+               st.Klienci.Id == user.Id && st.Produkty.Id == product.Id
+                                               select st);
+                            var transakcja = transakcja1.FirstOrDefault();
+                            if (transakcja != null)
+                            {
+                                transakcja.StatusTransakcji = "Odrzucona";
+                                context.SaveChanges();
+                            }
+                        }
+                    }
+                    else
+                    {
+                        dt.Rows.Add(row.Cells[1].Text, row.Cells[2].Text, row.Cells[3].Text, row.Cells[4].Text);
+                    }
+                    GridView5.DataSource = dt;
+                    GridView5.DataBind();
+                }
+            }
+        }
+        protected void DoDelivery_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (int.Parse(TBDelivery.Text) > 0)
+                {
+                    using (var context = new MyContext())
+                    {
+                        var user = Session["UserName"].ToString();
+                        var product = DDLDelivery.SelectedItem.Text;
+                        var dostawa = new Dostawy
+                        {
+                            Ilość = int.Parse(TBDelivery.Text),
+                            Pracownicy = context.Pracownicys.FirstOrDefault(x => x.Login == user),
+                            Produkty = context.Produktys.FirstOrDefault(x => x.Nazwa == product)
+                        };
+                        var updateproduct = context.Produktys.FirstOrDefault(x => x.Nazwa == product);
+                        updateproduct.Ilość += dostawa.Ilość;
+                        context.Dostawys.Add(dostawa);
+                        context.SaveChanges();
+                    }
+                    Page_Load(sender, e);
+                }
+                else
+                {
+                    MessageBox.Show(this,"Głupi czy co?");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(this, ex.Message);
+            }
         }
     }
     public static class MessageBox

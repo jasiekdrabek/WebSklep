@@ -508,6 +508,42 @@ namespace WebSklep {
         protected global::System.Web.UI.WebControls.View EmploeeTab1;
         
         /// <summary>
+        /// TBChangePasswordOldPasswordEmployee control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TBChangePasswordOldPasswordEmployee;
+        
+        /// <summary>
+        /// TBChangePasswordNewPasswordEmployee control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TBChangePasswordNewPasswordEmployee;
+        
+        /// <summary>
+        /// TBChangeEmailOldEmailEmployee control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TBChangeEmailOldEmailEmployee;
+        
+        /// <summary>
+        /// TBChangeEmailNewEmailEmployee control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TBChangeEmailNewEmailEmployee;
+        
+        /// <summary>
         /// OwnerPanel control.
         /// </summary>
         /// <remarks>
@@ -515,6 +551,42 @@ namespace WebSklep {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel OwnerPanel;
+        
+        /// <summary>
+        /// TBNewEmployeeLogin control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TBNewEmployeeLogin;
+        
+        /// <summary>
+        /// DDLNewEmployeePosition control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList DDLNewEmployeePosition;
+        
+        /// <summary>
+        /// DDLNewEmployeeSalary control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList DDLNewEmployeeSalary;
+        
+        /// <summary>
+        /// DDLFireEmployee control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList DDLFireEmployee;
         
         /// <summary>
         /// EmploeeTab2 control.
@@ -526,6 +598,24 @@ namespace WebSklep {
         protected global::System.Web.UI.WebControls.View EmploeeTab2;
         
         /// <summary>
+        /// GridView5 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView GridView5;
+        
+        /// <summary>
+        /// GridView6 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView GridView6;
+        
+        /// <summary>
         /// EmploeeTab3 control.
         /// </summary>
         /// <remarks>
@@ -533,5 +623,32 @@ namespace WebSklep {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.View EmploeeTab3;
+        
+        /// <summary>
+        /// GridView7 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView GridView7;
+        
+        /// <summary>
+        /// TBDelivery control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TBDelivery;
+        
+        /// <summary>
+        /// DDLDelivery control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList DDLDelivery;
     }
 }
