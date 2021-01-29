@@ -409,13 +409,13 @@ namespace WebSklep {
         protected global::System.Web.UI.WebControls.View ClientView2;
         
         /// <summary>
-        /// GridView1 control.
+        /// GridViewTransactionsInPreparation control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridView1;
+        protected global::System.Web.UI.WebControls.GridView GridViewTransactionsInPreparation;
         
         /// <summary>
         /// TBProductQuantity control.
@@ -436,31 +436,31 @@ namespace WebSklep {
         protected global::System.Web.UI.WebControls.DropDownList DDLProductName;
         
         /// <summary>
-        /// GridView2 control.
+        /// GridViewTransactionInProgres control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridView2;
+        protected global::System.Web.UI.WebControls.GridView GridViewTransactionInProgres;
         
         /// <summary>
-        /// GridView3 control.
+        /// GridViewAcceptedTransactions control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridView3;
+        protected global::System.Web.UI.WebControls.GridView GridViewAcceptedTransactions;
         
         /// <summary>
-        /// GridView4 control.
+        /// GridViewDeclinedTransactions control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridView4;
+        protected global::System.Web.UI.WebControls.GridView GridViewDeclinedTransactions;
         
         /// <summary>
         /// EmployeePanel control.
@@ -598,22 +598,22 @@ namespace WebSklep {
         protected global::System.Web.UI.WebControls.View EmploeeTab2;
         
         /// <summary>
-        /// GridView5 control.
+        /// GridViewTransactionInProgresEmployee control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridView5;
+        protected global::System.Web.UI.WebControls.GridView GridViewTransactionInProgresEmployee;
         
         /// <summary>
-        /// GridView6 control.
+        /// GridViewProductInShop control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridView6;
+        protected global::System.Web.UI.WebControls.GridView GridViewProductInShop;
         
         /// <summary>
         /// EmploeeTab3 control.
@@ -623,15 +623,6 @@ namespace WebSklep {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.View EmploeeTab3;
-        
-        /// <summary>
-        /// GridView7 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridView7;
         
         /// <summary>
         /// TBDelivery control.
@@ -650,5 +641,14 @@ namespace WebSklep {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList DDLDelivery;
+        
+        /// <summary>
+        /// GridViewProductInShop2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView GridViewProductInShop2;
     }
 }

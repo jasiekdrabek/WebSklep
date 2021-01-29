@@ -19,6 +19,7 @@ namespace WebSklep
             TBSignUpPassword.Attributes["type"] = "password";
             TBChangePasswordNewPassword.Attributes["type"] = "password";
             TBChangePasswordOldPassword.Attributes["type"] = "password";
+            
             if (!IsPostBack)
             {
                 SignUpPanel.Visible = false;
@@ -82,7 +83,7 @@ namespace WebSklep
                             }
                         }
                         int i = 0;
-                        foreach (GridViewRow row in GridView1.Rows)
+                        foreach (GridViewRow row in GridViewTransactionsInPreparation.Rows)
                         {
                             if (row.RowType == DataControlRowType.DataRow)
                             {
@@ -95,15 +96,15 @@ namespace WebSklep
                         }
                         if (i == 0)
                         {
-                            GridView1.DataSource = WPrzygotowaniu;
-                            GridView1.DataBind();
+                            GridViewTransactionsInPreparation.DataSource = WPrzygotowaniu;
+                            GridViewTransactionsInPreparation.DataBind();
                         }
-                        GridView2.DataSource = WTrakcie;
-                        GridView2.DataBind();
-                        GridView3.DataSource = Zrealizowane;
-                        GridView3.DataBind();
-                        GridView4.DataSource = Odrzucone;
-                        GridView4.DataBind();
+                        GridViewTransactionInProgres.DataSource = WTrakcie;
+                        GridViewTransactionInProgres.DataBind();
+                        GridViewAcceptedTransactions.DataSource = Zrealizowane;
+                        GridViewAcceptedTransactions.DataBind();
+                        GridViewDeclinedTransactions.DataSource = Odrzucone;
+                        GridViewDeclinedTransactions.DataBind();
                     }
                 }
                 if (Session["Role"].ToString() == "Employee")
@@ -134,7 +135,7 @@ namespace WebSklep
                             }
                         }
                         int i = 0;
-                        foreach (GridViewRow row in GridView5.Rows)
+                        foreach (GridViewRow row in GridViewTransactionInProgresEmployee.Rows)
                         {
                             if (row.RowType == DataControlRowType.DataRow)
                             {
@@ -147,13 +148,13 @@ namespace WebSklep
                         }
                         if (i == 0)
                         {
-                            GridView5.DataSource = zamówienia;
-                            GridView5.DataBind();
+                            GridViewTransactionInProgresEmployee.DataSource = zamówienia;
+                            GridViewTransactionInProgresEmployee.DataBind();
                         }
-                        GridView6.DataSource = produkty;
-                        GridView6.DataBind();
-                        GridView7.DataSource = produkty;
-                        GridView7.DataBind();
+                        GridViewProductInShop.DataSource = produkty;
+                        GridViewProductInShop.DataBind();
+                        GridViewProductInShop2.DataSource = produkty;
+                        GridViewProductInShop2.DataBind();
                     }
                 }
             }
@@ -707,7 +708,7 @@ namespace WebSklep
         {
             DataTable dt = new DataTable();
             dt.Columns.AddRange(new DataColumn[3] { new DataColumn("Nazwa"), new DataColumn("Ilość"), new DataColumn("Cena") });
-            foreach (GridViewRow row in GridView1.Rows)
+            foreach (GridViewRow row in GridViewTransactionsInPreparation.Rows)
             {
                 if (row.RowType == DataControlRowType.DataRow)
                 {
@@ -740,14 +741,14 @@ namespace WebSklep
                     }
                 }
             }
-            GridView1.DataSource = dt;
-            GridView1.DataBind();
+            GridViewTransactionsInPreparation.DataSource = dt;
+            GridViewTransactionsInPreparation.DataBind();
         }
         protected void Transaction_Click(object sender, EventArgs e)
         {
             DataTable dt = new DataTable();
             dt.Columns.AddRange(new DataColumn[3] { new DataColumn("Nazwa"), new DataColumn("Ilość"), new DataColumn("Cena") });
-            foreach (GridViewRow row in GridView1.Rows)
+            foreach (GridViewRow row in GridViewTransactionsInPreparation.Rows)
             {
                 if (row.RowType == DataControlRowType.DataRow)
                 {
@@ -777,8 +778,9 @@ namespace WebSklep
                         dt.Rows.Add(row.Cells[1].Text, row.Cells[2].Text, row.Cells[3].Text);
                     }
                 }
-                GridView1.DataSource = dt;
-                GridView1.DataBind();
+                GridViewTransactionsInPreparation.DataSource = dt;
+                GridViewTransactionsInPreparation.DataBind();
+                Page_Load(sender, e);
             }
         }
         protected void Hire_Click(object sender, EventArgs e)
@@ -841,7 +843,7 @@ namespace WebSklep
             {
                 DataTable dt = new DataTable();
                 dt.Columns.AddRange(new DataColumn[4] { new DataColumn("Klient"), new DataColumn("Nazwa"), new DataColumn("Ilość"), new DataColumn("Cena") });
-                foreach (GridViewRow row in GridView5.Rows)
+                foreach (GridViewRow row in GridViewTransactionInProgresEmployee.Rows)
                 {
                     if (row.RowType == DataControlRowType.DataRow)
                     {
@@ -873,16 +875,20 @@ namespace WebSklep
                                                 transakcja.StatusTransakcji = "Zrealizowana";
                                             product.Ilość -= transakcja.IlośćKupionegoProduktu;
                                             user.IlośćPieniędzy -= transakcja.Cena;
-                                                context.SaveChanges();
+                                            var employee = Session["UserName"].ToString();
+                                            transakcja.Pracownicy = context.Pracownicys.FirstOrDefault(x => x.Login == employee);
+                                            context.SaveChanges();
                                         }
                                         else
                                         {
                                             MessageBox.Show(this, "Klient nie ma tyle pieniędzy");
+                                            dt.Rows.Add(row.Cells[1].Text, row.Cells[2].Text, row.Cells[3].Text, row.Cells[4].Text);
                                         }
                                     }
                                     else
                                     {
                                         MessageBox.Show(this, "Nie mamy tyle sztuk tego produktu");
+                                        dt.Rows.Add(row.Cells[1].Text, row.Cells[2].Text, row.Cells[3].Text, row.Cells[4].Text);
                                     }
                                 }
                             }
@@ -891,8 +897,8 @@ namespace WebSklep
                         {
                             dt.Rows.Add(row.Cells[1].Text, row.Cells[2].Text, row.Cells[3].Text, row.Cells[4].Text);
                         }
-                        GridView5.DataSource = dt;
-                        GridView5.DataBind();
+                        GridViewTransactionInProgresEmployee.DataSource = dt;
+                        GridViewTransactionInProgresEmployee.DataBind();
 
                     }
                 }
@@ -906,7 +912,7 @@ namespace WebSklep
         {
             DataTable dt = new DataTable();
             dt.Columns.AddRange(new DataColumn[4] { new DataColumn("Klient"), new DataColumn("Nazwa"), new DataColumn("Ilość"), new DataColumn("Cena") });
-            foreach (GridViewRow row in GridView5.Rows)
+            foreach (GridViewRow row in GridViewTransactionInProgresEmployee.Rows)
             {
                 if (row.RowType == DataControlRowType.DataRow)
                 {
@@ -929,6 +935,8 @@ namespace WebSklep
                             var transakcja = transakcja1.FirstOrDefault();
                             if (transakcja != null)
                             {
+                                var employee = Session["UserName"].ToString();
+                                transakcja.Pracownicy = context.Pracownicys.FirstOrDefault(x => x.Login == employee);
                                 transakcja.StatusTransakcji = "Odrzucona";
                                 context.SaveChanges();
                             }
@@ -938,8 +946,8 @@ namespace WebSklep
                     {
                         dt.Rows.Add(row.Cells[1].Text, row.Cells[2].Text, row.Cells[3].Text, row.Cells[4].Text);
                     }
-                    GridView5.DataSource = dt;
-                    GridView5.DataBind();
+                    GridViewTransactionInProgresEmployee.DataSource = dt;
+                    GridViewTransactionInProgresEmployee.DataBind();
                 }
             }
         }

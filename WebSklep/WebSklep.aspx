@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#"  AutoEventWireup="true" CodeBehind="WebSklep.aspx.cs" Inherits="WebSklep.WebSklep" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="WebSklep.aspx.cs" Inherits="WebSklep.WebSklep" %>
 
 <!DOCTYPE html>
 
@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous" />
     <link href="Style/main.css" rel="stylesheet" type="text/css" />
 </head>
-<body>
+<body onload="window.history.forward();">
     <form id="form1" runat="server">
         <div class="wrapper">
             <div class="logo">
@@ -17,14 +17,14 @@
             <div class="clear"></div>
             <div class="content">
                 <div>
-                    <asp:Button ID="ButtonStartLogin" Text="Logowanie" runat="server" OnClick="StartLogin_Click" />
+                    <asp:Button CssClass="btn" ID="ButtonStartLogin" Text="Logowanie" runat="server" OnClick="StartLogin_Click" />
                 </div>
                 <div>
-                    <asp:Button ID="ButtonStartSignUp" Text="Rejstracja" runat="server" OnClick="StartSignUp_Click" />
+                    <asp:Button CssClass="btn" ID="ButtonStartSignUp" Text="Rejstracja" runat="server" OnClick="StartSignUp_Click" />
                 </div>
                 <asp:Panel ID="LoginPanel" runat="server">
                     <div>
-                        <asp:Button ID="ButtonBack3" Text="Powrót" OnClick="ReturnToStart_Click" runat="server" />
+                        <asp:Button CssClass="btn" ID="ButtonBack3" Text="Powrót" OnClick="ReturnToStart_Click" runat="server" />
                     </div>
                     <asp:Label ID="LabelEmploeeOrClient" Text="Zaloguj jako:" runat="server" />
                     <asp:RadioButtonList ID="RBEmploeeOrClient" runat="server">
@@ -40,13 +40,13 @@
                         <asp:TextBox ID="TBPassword" TextMode="Password" runat="server" />
                     </div>
                     <div>
-                        <asp:Button ID="ButtonLogin" runat="server" Text="zaloguj" OnClick="Login_Click" />
+                        <asp:Button CssClass="btn" ID="ButtonLogin" runat="server" Text="zaloguj" OnClick="Login_Click" />
                     </div>
                 </asp:Panel>
                 <asp:Panel ID="SignUpPanel" runat="server">
                     <asp:Panel ID="SignUpDataPanel" runat="server">
                         <div>
-                            <asp:Button ID="ButtonBack2" Text="Powrót" OnClick="ReturnToStart_Click" runat="server" />
+                            <asp:Button CssClass="btn" ID="ButtonBack2" Text="Powrót" OnClick="ReturnToStart_Click" runat="server" />
                         </div>
                         <div>
                             <asp:Label ID="LabelSignUpLogin" runat="server" Text="Login:" />
@@ -65,12 +65,12 @@
                             <asp:TextBox ID="TBSignUpEmail" runat="server" />
                         </div>
                         <div>
-                            <asp:Button ID="ButtonSignUp1" Text="Zarejestruj" runat="server" OnClick="SignUp_Click" />
+                            <asp:Button CssClass="btn" ID="ButtonSignUp1" Text="Zarejestruj" runat="server" OnClick="SignUp_Click" />
                         </div>
                     </asp:Panel>
                     <asp:Panel ID="SignUpCodePanel" runat="server">
                         <div>
-                            <asp:Button ID="ButtonBack1" Text="Powrót" OnClick="ReturnToSignUp_Click" runat="server" />
+                            <asp:Button CssClass="btn" ID="ButtonBack1" Text="Powrót" OnClick="ReturnToSignUp_Click" runat="server" />
                         </div>
                         <div>
                             <asp:Label ID="LabelSignUpCode" Text="Kod aktywacyjny:" runat="server" />
@@ -78,16 +78,16 @@
                             <asp:TextBox ID="TextBox2" runat="server" Visible="false" />
                         </div>
                         <div>
-                            <asp:Button ID="ButtonCode" Text="Wyślij kod jeszcze raz" OnClick="ResendEmail_Click" runat="server" />
+                            <asp:Button CssClass="btn" ID="ButtonCode" Text="Wyślij kod jeszcze raz" OnClick="ResendEmail_Click" runat="server" />
                         </div>
                         <div>
-                            <asp:Button ID="ButtonSignUp2" Text="Aktywuj konto" OnClick="Activate_Click" runat="server" />
+                            <asp:Button CssClass="btn" ID="ButtonSignUp2" Text="Aktywuj konto" OnClick="Activate_Click" runat="server" />
                         </div>
                     </asp:Panel>
                 </asp:Panel>
                 <asp:Panel ID="ClientPanel" runat="server">
                     <asp:Label ID="LoginInfoLabel" runat="server" Text="Witaj" />
-                    <asp:Button OnClick="Logout_Click" runat="server" Text="Wyloguj" />
+                    <asp:Button CssClass="btn" OnClick="Logout_Click" runat="server" Text="Wyloguj" />
                     <div>
                         <asp:Menu ID="MenuClient" Width="504px" runat="server" Orientation="Horizontal" StaticEnableDefaultPopOutImage="False" OnMenuItemClick="MenuClient_MenuItemClick">
                             <Items>
@@ -98,54 +98,54 @@
                         <asp:MultiView ID="MultiViewClient" runat="server" ActiveViewIndex="0">
                             <asp:View ID="ClientView1" runat="server">
                                 <div>
-                                    <asp:Label ID="LBSaldo" runat="server" />
+                                    <asp:Label ID="LBSaldo" runat="server" Font-Size="Medium" Font-Bold="true" />
                                 </div>
                                 <div>
                                     <asp:TextBox ID="TBSaldoPlus" runat="server" />
-                                    <asp:Button Text="Dodaj" runat="server" OnClick="SaldoPlus_Click" />
-                                    </div>
-                                <div>
-                                    <asp:TextBox ID="TBSaldoMinus" runat="server" />
-                                    <asp:Button Text="Zabierz" runat="server" OnClick="SaldoMinus_Click" />
+                                    <asp:Button CssClass="btn" Text="Dodaj" runat="server" OnClick="SaldoPlus_Click" />
                                 </div>
                                 <div>
-                                    <asp:Label Text="Zmiana hasła:" runat="server" />
+                                    <asp:TextBox ID="TBSaldoMinus" runat="server" />
+                                    <asp:Button CssClass="btn" Text="Zabierz" runat="server" OnClick="SaldoMinus_Click" />
+                                </div>
+                                <div>
+                                    <asp:Label Text="Zmiana hasła:" runat="server" Font-Size="Medium" Font-Bold="true" />
                                 </div>
                                 <div>
                                     <asp:Label Text="Stare hasło:" runat="server" />
                                     <asp:TextBox ID="TBChangePasswordOldPassword" runat="server" />
-                                    </div>
+                                </div>
                                 <div>
                                     <asp:Label Text="Nowe hasło:" runat="server" />
                                     <asp:TextBox ID="TBChangePasswordNewPassword" runat="server" />
-                                    </div>
-                                <div>
-                                    <asp:Button runat="server" Text="Zmień hasło" OnClick="ChangePassword_Click" />
                                 </div>
                                 <div>
-                                    <asp:Label Text="Zmiana e-maila:" runat="server" />
+                                    <asp:Button CssClass="btn" runat="server" Text="Zmień hasło" OnClick="ChangePassword_Click" />
+                                </div>
+                                <div>
+                                    <asp:Label Text="Zmiana e-maila:" runat="server" Font-Size="Medium" Font-Bold="true" />
                                 </div>
                                 <div>
                                     <asp:Label Text="Stary e-mail:" runat="server" />
                                     <asp:TextBox ID="TBChangeEmailOldEmail" runat="server" />
-                                    </div>
+                                </div>
                                 <div>
                                     <asp:Label Text="Nowy e-mail:" runat="server" />
                                     <asp:TextBox ID="TBChangeEmailNewEmail" runat="server" />
-                                    </div>
-                                <div>
-                                    <asp:Button runat="server" Text="Zmień e-mail" OnClick="ChangeEmail_Click" />
                                 </div>
                                 <div>
-                                    <asp:Button Text="Usuń konto" runat="server" OnClick="DeleteAccount_Click" />
+                                    <asp:Button CssClass="btn" runat="server" Text="Zmień e-mail" OnClick="ChangeEmail_Click" />
+                                </div>
+                                <div>
+                                    <asp:Button CssClass="btn" Text="Usuń konto" runat="server" OnClick="DeleteAccount_Click" />
                                 </div>
                             </asp:View>
                             <asp:View ID="ClientView2" runat="server">
                                 <div>
-                                    <asp:Label Text="Twój koszyk:" runat="server" />
+                                    <asp:Label Text="Twój koszyk:" runat="server" Font-Size="Medium" Font-Bold="true" />
                                 </div>
                                 <div>
-                                    <asp:GridView ID="GridView1" runat="server" HeaderStyle-BackColor="#3AC0F2" HeaderStyle-ForeColor="White" AutoGenerateColumns="false">
+                                    <asp:GridView ID="GridViewTransactionsInPreparation" runat="server" HeaderStyle-BackColor="#3AC0F2" HeaderStyle-ForeColor="White" AutoGenerateColumns="false">
                                         <Columns>
                                             <asp:TemplateField>
                                                 <ItemTemplate>
@@ -159,20 +159,20 @@
                                     </asp:GridView>
                                 </div>
                                 <div>
-                                    <asp:Button runat="server" OnClick="DeleteTransactio_Click" Text="Usuń z koszyka" />
-                                    <asp:Button runat="server" OnClick="Transaction_Click" Text="Złóż zamówienie" />
+                                    <asp:Button CssClass="btn" runat="server" OnClick="DeleteTransactio_Click" Text="Usuń z koszyka" />
+                                    <asp:Button CssClass="btn" runat="server" OnClick="Transaction_Click" Text="Złóż zamówienie" />
                                 </div>
                                 <div>
                                     <asp:Label Text="Wybierz produkt i wpisz ilość:" runat="server" />
                                     <asp:TextBox runat="server" ID="TBProductQuantity" />
                                     <asp:DropDownList AutoPostBack="false" ID="DDLProductName" runat="server" />
-                                    <asp:Button runat="server" OnClick="AddToTransactios_Click" Text="Dodaj do zamówienia" />
+                                    <asp:Button CssClass="btn" runat="server" OnClick="AddToTransactios_Click" Text="Dodaj do zamówienia" />
                                 </div>
                                 <div>
-                                    <asp:Label Text="W trakcie:" runat="server" />
+                                    <asp:Label Text="W trakcie:" runat="server" Font-Size="Medium" Font-Bold="true" />
                                 </div>
                                 <div>
-                                    <asp:GridView ID="GridView2" runat="server" HeaderStyle-BackColor="#3AC0F2" HeaderStyle-ForeColor="White" AutoGenerateColumns="false">
+                                    <asp:GridView ID="GridViewTransactionInProgres" runat="server" HeaderStyle-BackColor="#3AC0F2" HeaderStyle-ForeColor="White" AutoGenerateColumns="false">
                                         <Columns>
                                             <asp:TemplateField></asp:TemplateField>
                                             <asp:BoundField DataField="Nazwa" HeaderText="Nazwa" ItemStyle-Width="150" />
@@ -182,10 +182,10 @@
                                     </asp:GridView>
                                 </div>
                                 <div>
-                                    <asp:Label Text="Zrealizowane:" runat="server" />
+                                    <asp:Label Text="Zrealizowane:" runat="server" Font-Size="Medium" Font-Bold="true" />
                                 </div>
                                 <div>
-                                    <asp:GridView ID="GridView3" runat="server" HeaderStyle-BackColor="#3AC0F2" HeaderStyle-ForeColor="White" AutoGenerateColumns="false">
+                                    <asp:GridView ID="GridViewAcceptedTransactions" runat="server" HeaderStyle-BackColor="#3AC0F2" HeaderStyle-ForeColor="White" AutoGenerateColumns="false">
                                         <Columns>
                                             <asp:TemplateField></asp:TemplateField>
                                             <asp:BoundField DataField="Nazwa" HeaderText="Nazwa" ItemStyle-Width="150" />
@@ -195,10 +195,10 @@
                                     </asp:GridView>
                                 </div>
                                 <div>
-                                    <asp:Label Text="Odrzucone:" runat="server" />
+                                    <asp:Label Text="Odrzucone:" runat="server" Font-Size="Medium" Font-Bold="true" />
                                 </div>
                                 <div>
-                                    <asp:GridView ID="GridView4" runat="server" HeaderStyle-BackColor="#3AC0F2" HeaderStyle-ForeColor="White" AutoGenerateColumns="false">
+                                    <asp:GridView ID="GridViewDeclinedTransactions" runat="server" HeaderStyle-BackColor="#3AC0F2" HeaderStyle-ForeColor="White" AutoGenerateColumns="false">
                                         <Columns>
                                             <asp:TemplateField></asp:TemplateField>
                                             <asp:BoundField DataField="Nazwa" HeaderText="Nazwa" ItemStyle-Width="150" />
@@ -213,95 +213,95 @@
                 </asp:Panel>
                 <asp:Panel ID="EmployeePanel" runat="server">
                     <asp:Label ID="LoginInfoLabelEmployee" runat="server" Text="Witaj" />
-                    <asp:Button OnClick="Logout_Click" runat="server" Text="Wyloguj" />
+                    <asp:Button CssClass="btn" OnClick="Logout_Click" runat="server" Text="Wyloguj" />
                     <div>
                         <asp:Menu ID="MenuEmploee" Width="504px" runat="server" Orientation="Horizontal" StaticEnableDefaultPopOutImage="False" OnMenuItemClick="MenuEmploee_MenuItemClick" />
                         <asp:MultiView ID="MultiViewEmploee" runat="server" ActiveViewIndex="0">
                             <asp:View ID="EmploeeTab1" runat="server">
                                 <div>
-                                    <asp:Label Text="Zmiana hasła:" runat="server" />
+                                    <asp:Label Text="Zmiana hasła:" runat="server" Font-Size="Medium" Font-Bold="true" />
                                 </div>
                                 <div>
                                     <asp:Label Text="Stare hasło:" runat="server" />
                                     <asp:TextBox ID="TBChangePasswordOldPasswordEmployee" runat="server" />
-                                    </div>
+                                </div>
                                 <div>
                                     <asp:Label Text="Nowe hasło:" runat="server" />
                                     <asp:TextBox ID="TBChangePasswordNewPasswordEmployee" runat="server" />
-                                    </div>
-                                <div>
-                                    <asp:Button runat="server" Text="Zmień hasło" OnClick="ChangePasswordEmployee_Click" />
                                 </div>
                                 <div>
-                                    <asp:Label Text="Zmiana e-maila:" runat="server" />
+                                    <asp:Button CssClass="btn" runat="server" Text="Zmień hasło" OnClick="ChangePasswordEmployee_Click" />
+                                </div>
+                                <div>
+                                    <asp:Label Text="Zmiana e-maila:" runat="server" Font-Size="Medium" Font-Bold="true" />
                                 </div>
                                 <div>
                                     <asp:Label Text="Stary e-mail:" runat="server" />
                                     <asp:TextBox ID="TBChangeEmailOldEmailEmployee" runat="server" />
-                                    </div>
+                                </div>
                                 <div>
                                     <asp:Label Text="Nowy e-mail:" runat="server" />
                                     <asp:TextBox ID="TBChangeEmailNewEmailEmployee" runat="server" />
-                                    </div>
-                                <div>
-                                    <asp:Button runat="server" Text="Zmień e-mail" OnClick="ChangeEmailEmployee_Click" />
                                 </div>
-               <asp:Panel ID="OwnerPanel" runat="server" >
-                   <div>
-                   <asp:Label runat="server" Text="Dodaj pracowniika:" />
-                       </div>
-                   <div>
-                   <asp:Label runat="server" Text="Login:" />
-                       <asp:TextBox runat="server" ID="TBNewEmployeeLogin"/>
-                       </div>
-                   <div>
-                       <asp:Label runat="server" Text="Stanowisko:" />
-                       <asp:DropDownList runat="server" ID="DDLNewEmployeePosition" >
-                           <asp:ListItem Selected="True" Text="Dostawca" Value="Dostawca"/>
-                           <asp:ListItem Text="Sprzedawca" Value="Sprzedawca" />
-                       </asp:DropDownList>
-                   </div>
-                   <div>
-                       <asp:Label runat="server" Text="Wynagrodzenie:" />
-                       <asp:DropDownList runat="server" ID="DDLNewEmployeeSalary">
-                           <asp:ListItem Text="2000" Value="2000" Selected="True"/>
-                           <asp:ListItem Text="2100" Value="2100"/>
-                           <asp:ListItem Text="2200" Value="2200"/>
-                           <asp:ListItem Text="2300" Value="2300"/>
-                           <asp:ListItem Text="2400" Value="2400"/>
-                           <asp:ListItem Text="2500" Value="2500"/>
-                           <asp:ListItem Text="2600" Value="2600"/>
-                           <asp:ListItem Text="2700" Value="2700"/>
-                           <asp:ListItem Text="2800" Value="2800"/>
-                           <asp:ListItem Text="2900" Value="2900"/>
-                           <asp:ListItem Text="3000" Value="3000"/>
-                           <asp:ListItem Text="3100" Value="3100"/>
-                           <asp:ListItem Text="3200" Value="3200"/>
-                           <asp:ListItem Text="3300" Value="3300"/>
-                           <asp:ListItem Text="3400" Value="3400"/>
-                           <asp:ListItem Text="3500" Value="3500"/>
-                       </asp:DropDownList>
-                   </div>
-                   <div>
-                       <asp:Button runat="server" OnClick="Hire_Click" Text="Zatrudnij" />
-                   </div>
-                   <div>
-                       <asp:Label runat="server" Text="Zwolnij pracownika:" />
-                   </div>
-                   <div>
-                       <asp:DropDownList AutoPostBack="false" runat="server" ID="DDLFireEmployee"/>
-                       </div>
-                       <div>
-                       <asp:Button runat="server" Text="zwolnij" OnClick="Fire_Click" />
-                   </div>
-                   </asp:Panel>
+                                <div>
+                                    <asp:Button CssClass="btn" runat="server" Text="Zmień e-mail" OnClick="ChangeEmailEmployee_Click" />
+                                </div>
+                                <asp:Panel ID="OwnerPanel" runat="server">
+                                    <div>
+                                        <asp:Label runat="server" Text="Dodaj pracowniika:" Font-Size="Medium" Font-Bold="true" />
+                                    </div>
+                                    <div>
+                                        <asp:Label runat="server" Text="Login:" />
+                                        <asp:TextBox runat="server" ID="TBNewEmployeeLogin" />
+                                    </div>
+                                    <div>
+                                        <asp:Label runat="server" Text="Stanowisko:" />
+                                        <asp:DropDownList runat="server" ID="DDLNewEmployeePosition">
+                                            <asp:ListItem Selected="True" Text="Dostawca" Value="Dostawca" />
+                                            <asp:ListItem Text="Sprzedawca" Value="Sprzedawca" />
+                                        </asp:DropDownList>
+                                    </div>
+                                    <div>
+                                        <asp:Label runat="server" Text="Wynagrodzenie:" />
+                                        <asp:DropDownList runat="server" ID="DDLNewEmployeeSalary">
+                                            <asp:ListItem Text="2000" Value="2000" Selected="True" />
+                                            <asp:ListItem Text="2100" Value="2100" />
+                                            <asp:ListItem Text="2200" Value="2200" />
+                                            <asp:ListItem Text="2300" Value="2300" />
+                                            <asp:ListItem Text="2400" Value="2400" />
+                                            <asp:ListItem Text="2500" Value="2500" />
+                                            <asp:ListItem Text="2600" Value="2600" />
+                                            <asp:ListItem Text="2700" Value="2700" />
+                                            <asp:ListItem Text="2800" Value="2800" />
+                                            <asp:ListItem Text="2900" Value="2900" />
+                                            <asp:ListItem Text="3000" Value="3000" />
+                                            <asp:ListItem Text="3100" Value="3100" />
+                                            <asp:ListItem Text="3200" Value="3200" />
+                                            <asp:ListItem Text="3300" Value="3300" />
+                                            <asp:ListItem Text="3400" Value="3400" />
+                                            <asp:ListItem Text="3500" Value="3500" />
+                                        </asp:DropDownList>
+                                    </div>
+                                    <div>
+                                        <asp:Button CssClass="btn" runat="server" OnClick="Hire_Click" Text="Zatrudnij" />
+                                    </div>
+                                    <div>
+                                        <asp:Label runat="server" Text="Zwolnij pracownika:" Font-Size="Medium" Font-Bold="true" />
+                                    </div>
+                                    <div>
+                                        <asp:DropDownList AutoPostBack="false" runat="server" ID="DDLFireEmployee" />
+                                    </div>
+                                    <div>
+                                        <asp:Button CssClass="btn" runat="server" Text="zwolnij" OnClick="Fire_Click" />
+                                    </div>
+                                </asp:Panel>
                             </asp:View>
                             <asp:View ID="EmploeeTab2" runat="server">
                                 <div>
-                                <asp:Label runat="server" Text="Zamówienia do obsługi" />
+                                    <asp:Label runat="server" Text="Zamówienia do obsługi:" Font-Size="Medium" Font-Bold="true" />
                                 </div>
                                 <div>
-                                    <asp:GridView ID="GridView5" runat="server" HeaderStyle-BackColor="#3AC0F2" HeaderStyle-ForeColor="White" AutoGenerateColumns="false">
+                                    <asp:GridView ID="GridViewTransactionInProgresEmployee" runat="server" HeaderStyle-BackColor="#3AC0F2" HeaderStyle-ForeColor="White" AutoGenerateColumns="false">
                                         <Columns>
                                             <asp:TemplateField>
                                                 <ItemTemplate>
@@ -316,14 +316,14 @@
                                     </asp:GridView>
                                 </div>
                                 <div>
-                                    <asp:Button Text="Zrealizuj" runat="server" OnClick="AcceptTransaction_Click" />
-                                    <asp:Button Text="Odrzuć" runat="server" OnClick="DeclineTransaction_Click" />
+                                    <asp:Button CssClass="btn" Text="Zrealizuj" runat="server" OnClick="AcceptTransaction_Click" />
+                                    <asp:Button CssClass="btn" Text="Odrzuć" runat="server" OnClick="DeclineTransaction_Click" />
                                 </div>
                                 <div>
-                                    <asp:Label Text="Produkty w sklepie:" runat="server" />
+                                    <asp:Label Text="Produkty w sklepie:" runat="server" Font-Size="Medium" Font-Bold="true" />
                                 </div>
                                 <div>
-                                    <asp:GridView ID="GridView6" runat="server" HeaderStyle-BackColor="#3AC0F2" HeaderStyle-ForeColor="White" AutoGenerateColumns="false">
+                                    <asp:GridView ID="GridViewProductInShop" runat="server" HeaderStyle-BackColor="#3AC0F2" HeaderStyle-ForeColor="White" AutoGenerateColumns="false">
                                         <Columns>
                                             <asp:TemplateField></asp:TemplateField>
                                             <asp:BoundField DataField="Produkt" HeaderText="Produkt" ItemStyle-Width="150" />
@@ -334,26 +334,29 @@
                             </asp:View>
                             <asp:View ID="EmploeeTab3" runat="server">
                                 <div>
-                                    <asp:Label Text="Produkty w sklepie:" runat="server" />
+                                    <asp:Label Text="Zrób dostawę:" runat="server" Font-Size="Medium" Font-Bold="true" />
                                 </div>
-                                <div>
-                                <asp:GridView ID="GridView7" runat="server" HeaderStyle-BackColor="#3AC0F2" HeaderStyle-ForeColor="White" AutoGenerateColumns="false">
-                                        <Columns>
-                                            <asp:TemplateField></asp:TemplateField>
-                                            <asp:BoundField DataField="Produkt" HeaderText="Produkt" ItemStyle-Width="150" />
-                                            <asp:BoundField DataField="Ilość" HeaderText="Ilość" ItemStyle-Width="150" />
-                                        </Columns>
-                                    </asp:GridView>
-                                    </div>
                                 <div>
                                     <asp:Label runat="server" Text="Wybierz produkt i wpisz ilość" />
                                 </div>
                                 <div>
                                     <asp:TextBox runat="server" ID="TBDelivery" />
                                     <asp:DropDownList AutoPostBack="false" runat="server" ID="DDLDelivery" />
-                                    </div>
+                                </div>
                                 <div>
-                                    <asp:Button runat="server" OnClick="DoDelivery_Click" Text="Zrób dostawę" />
+                                    <asp:Button CssClass="btn" runat="server" OnClick="DoDelivery_Click" Text="Zrób dostawę" />
+                                </div>
+                                <div>
+                                    <asp:Label Text="Produkty w sklepie:" runat="server" Font-Size="Medium" Font-Bold="true" />
+                                </div>
+                                <div>
+                                    <asp:GridView ID="GridViewProductInShop2" runat="server" HeaderStyle-BackColor="#3AC0F2" HeaderStyle-ForeColor="White" AutoGenerateColumns="false">
+                                        <Columns>
+                                            <asp:TemplateField></asp:TemplateField>
+                                            <asp:BoundField DataField="Produkt" HeaderText="Produkt" ItemStyle-Width="150" />
+                                            <asp:BoundField DataField="Ilość" HeaderText="Ilość" ItemStyle-Width="150" />
+                                        </Columns>
+                                    </asp:GridView>
                                 </div>
                             </asp:View>
                         </asp:MultiView>
